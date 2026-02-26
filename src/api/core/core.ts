@@ -1,9 +1,8 @@
 import type { AxiosInstance } from "axios";
 import { WIALON_URL } from "../../config/config";
 import axios from "axios";
-import type { ILoginParams, ILoginResponse, ILoginResult } from "../interfaces/core.interface";
-import { WialonErrorCode, WialonErrorMessages } from "../types/errors";
-import { AuthAPI } from "./auth/login";
+import { WialonErrorMessages } from "../types/errors";
+import { AuthAPI } from "./auth/auth.ts";
 
 export class WialonAuthError extends Error {
   public readonly code: number;
