@@ -2,7 +2,7 @@ import type { AxiosInstance } from "axios";
 import { WIALON_URL } from "../../config/config";
 import axios from "axios";
 import { WialonErrorMessages } from "../types/errors";
-import { AuthAPI } from "./auth/auth.ts";
+import { AuthAPI } from "./services/auth.ts";
 
 export class WialonAuthError extends Error {
   public readonly code: number;
