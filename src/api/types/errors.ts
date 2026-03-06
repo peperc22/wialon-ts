@@ -1,5 +1,6 @@
 export enum WialonErrorCode {
   SUCCESSFUL_OPERATION = 0,
+  SERVER_CONNECTION_ERROR = 1,
   UNKNOWN_ERROR = 6,
   INVALID_INPUT = 4,
   REQUEST_LIMIT = 1003,
@@ -9,6 +10,7 @@ export enum WialonErrorCode {
 
 export const WialonErrorMessages: Record<number, string> = {
   [WialonErrorCode.SUCCESSFUL_OPERATION]: 'Successful operation',
+  [WialonErrorCode.SERVER_CONNECTION_ERROR]: 'Server connection error',
   [WialonErrorCode.INVALID_INPUT]: 'Invalid session | item not found | unknown error | internal error | non authorized | wrong token lenght',
   [WialonErrorCode.UNKNOWN_ERROR]: 'Unknown error ocurred',
   [WialonErrorCode.REQUEST_LIMIT]: 'Request limit exceeded',
