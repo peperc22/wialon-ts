@@ -51,4 +51,36 @@ export class AuthAPI {
       );
     }
   }
+
+  async logout(sid: string): Promise<void> {
+    try {
+      const response = await this.client.get<{ error: number }>('', {
+        params: {
+          svc: 'core/logout',
+          params: JSON.stringify({}),
+          sid
+        }
+      });
+
+      if ('error' in response.data && response.data.error !== 0)
+        throw new WialonAuthError(response.data.error);
+    } catch (error) {
+      if (error instanceof WialonAuthError)
+        throw error;
+
+      if (axios.isAxiosError(error)) {
+        throw new WialonAuthError(
+          WialonErrorCode.UNKNOWN_ERROR,
+          `Network error: ${error.message}`,
+          error
+        );
+      }
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        `Unexpected error during logout`,
+        error
+      );
+    }
+  }
 }
