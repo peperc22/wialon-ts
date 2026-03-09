@@ -78,4 +78,75 @@ export class ReportsAPI {
       );
     }
   }
+
+  async ExecReport(resourceId: string, reportId: number, objectId: number, unixDateFrom: number, unixDateTo: number, sid: string) {
+    const params = {
+      reportResourceId: resourceId,
+      reportTemplateId: reportId,
+      reportObjectId: objectId,
+      reportObjectSecId: 0,
+      interval: {
+        from: unixDateFrom,
+        to: unixDateTo,
+        flags: 0,
+      },
+      remoteExec: 0,
+      reportTemplate: []
+    }
+
+    try {
+      const response = await this.client.get('', {
+        params: {
+          svc: 'report/exec_report',
+          params: JSON.stringify(params),
+          sid
+        }
+      })
+    } catch (error) {
+      if (error instanceof WialonAuthError)
+        throw error;
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        'Unexpected error during exec report',
+        error
+      );
+    }
+  }
+
+  async GetData(objectsLimit: number, sid: string) {
+    const params = {
+      tableIndex: 0,
+      config: {
+        type: "range",
+        data: {
+          from: 0,
+          to: objectsLimit,
+          level: 1,
+          unitInfo: 1,
+        }
+      }
+    }
+
+    try {
+      const response = await this.client.get('', {
+        params: {
+          svc: 'report/select_result_rows',
+          params: JSON.stringify(params),
+          sid
+        }
+      })
+
+      return response.data;
+    } catch (error) {
+      if (error instanceof WialonAuthError)
+        throw error;
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        'Unexpected error during getting report data',
+        error
+      );
+    }
+  }
 }
