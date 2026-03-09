@@ -1,8 +1,17 @@
 {
   "name": "wialon-ts",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for Wialon API",
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "exports": {
+    ".": "./index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peperc22/wialon-ts.git"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
