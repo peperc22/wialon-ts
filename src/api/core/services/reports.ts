@@ -102,6 +102,9 @@ export class ReportsAPI {
           sid
         }
       })
+
+      if ('error' in response.data)
+        throw new WialonAuthError(response.data.error);
     } catch (error) {
       if (error instanceof WialonAuthError)
         throw error;
