@@ -105,6 +105,8 @@ export class ReportsAPI {
 
       if ('error' in response.data)
         throw new WialonAuthError(response.data.error);
+
+      return true;
     } catch (error) {
       if (error instanceof WialonAuthError)
         throw error;
