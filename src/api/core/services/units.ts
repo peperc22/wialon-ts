@@ -45,4 +45,47 @@ export class UnitApi {
       );
     }
   }
+
+  async getUnitGroup(sid: string, groupName: string): Promise<IGroupData> {
+    const params = {
+      spec: {
+        itemsType: "avl_unit_group",
+        propName: "sys_name",
+        propValueMask: groupName,
+        sortType: "",
+      },
+      force: 1,
+      flags: 1,
+      from: 0,
+      to: 0,
+    };
+    try {
+      const response = await this.client.get("", {
+        params: {
+          svc: "core/search_items",
+          params: JSON.stringify(params),
+          sid: sid,
+        },
+      });
+
+      if ("error" in response.data)
+        throw new WialonAuthError(response.data.error);
+
+      const data = response.data.items[0];
+
+      return {
+        groupName: data.nm,
+        groupId: data.id,
+        unitIds: data.u,
+      };
+    } catch (error) {
+      if (error instanceof WialonAuthError) throw error;
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        "Unexpected error during group data retrieval",
+        error,
+      );
+    }
+  }
 }
