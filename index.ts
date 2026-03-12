@@ -1,5 +1,5 @@
 // Main API exports
-export { WialonAPI, WialonAuthError } from "./src/api/core/core";
+export { WialonApi, WialonAuthError } from "./src/api/core/core";
 export { AuthApi } from "./src/api/core/services/auth";
 export { ReportsApi } from "./src/api/core/services/reports";
 export { UnitApi } from "./src/api/core/services/units";
