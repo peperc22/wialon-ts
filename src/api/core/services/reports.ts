@@ -17,7 +17,7 @@ interface ResourceItem {
   rep: Record<string, Report>;
 }
 
-export class ReportsAPI {
+export class ReportsApi {
   constructor(private client: AxiosInstance) {}
 
   async ReportId(

@@ -2,8 +2,8 @@ import type { AxiosInstance } from "axios";
 import { WIALON_URL } from "../../config/config";
 import axios from "axios";
 import { WialonErrorMessages } from "../types/errors";
-import { AuthAPI } from "./services/auth.ts";
-import { ReportsAPI } from "./services/reports.ts";
+import { AuthApi } from "./services/auth.ts";
+import { ReportsApi } from "./services/reports.ts";
 import { UnitApi } from "./services/units.ts";
 
 export class WialonAuthError extends Error {
@@ -27,8 +27,8 @@ export class WialonAuthError extends Error {
 
 export class WialonAPI {
   private client: AxiosInstance;
-  public readonly auth: AuthAPI;
-  public readonly report: ReportsAPI;
+  public readonly auth: AuthApi;
+  public readonly report: ReportsApi;
   public readonly unit: UnitApi;
 
   constructor(baseUrl: string = WIALON_URL) {
@@ -37,8 +37,8 @@ export class WialonAPI {
       timeout: 30000,
     });
 
-    this.auth = new AuthAPI(this.client);
-    this.report = new ReportsAPI(this.client);
+    this.auth = new AuthApi(this.client);
+    this.report = new ReportsApi(this.client);
     this.unit = new UnitApi(this.client);
   }
 }

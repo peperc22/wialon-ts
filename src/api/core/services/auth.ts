@@ -8,7 +8,7 @@ import { WialonAuthError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 import axios from "axios";
 
-export class AuthAPI {
+export class AuthApi {
   constructor(private client: AxiosInstance) {}
 
   async login(wialonToken: string): Promise<ILoginResult> {
