@@ -6,7 +6,7 @@ import type { IGroupData } from "../../interfaces/units.interface";
 export class UnitApi {
   constructor(private client: AxiosInstance) {}
 
-  async GetIdByName(sid: string, unitName: string): Promise<number> {
+  async findUnitByName(sid: string, unitName: string): Promise<number> {
     const params = {
       spec: {
         itemsType: "avl_unit",
