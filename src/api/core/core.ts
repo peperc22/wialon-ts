@@ -11,25 +11,21 @@ export class WialonAuthError extends Error {
   public readonly isWialonError: boolean;
   public readonly originalError?: unknown;
 
-  constructor(
-    code: number,
-    message?: string,
-    originalError?: unknown
-  ) {
-    const errorMessage = message || WialonErrorMessages[code] || `Wialon error code: ${code}`;
+  constructor(code: number, message?: string, originalError?: unknown) {
+    const errorMessage =
+      message || WialonErrorMessages[code] || `Wialon error code: ${code}`;
     super(errorMessage);
 
-    this.name = 'WialonAuthError';
+    this.name = "WialonAuthError";
     this.code = code;
     this.isWialonError = true;
     this.originalError = originalError;
 
     Error.captureStackTrace(this, this.constructor);
   }
-
 }
 
-export class CoreAPI {
+export class WialonAPI {
   private client: AxiosInstance;
   public readonly auth: AuthAPI;
   public readonly report: ReportsAPI;
