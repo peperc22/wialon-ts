@@ -25,7 +25,7 @@ export class WialonAuthError extends Error {
   }
 }
 
-export class WialonAPI {
+export class WialonApi {
   private client: AxiosInstance;
   public readonly auth: AuthApi;
   public readonly report: ReportsApi;
