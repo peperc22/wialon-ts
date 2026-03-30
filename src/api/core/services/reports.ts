@@ -20,7 +20,7 @@ interface ResourceItem {
 export class ReportsApi {
   constructor(private client: AxiosInstance) {}
 
-  async ReportId(
+  async findReportId(
     sid: string,
     user: string,
     reportName: string,
@@ -82,7 +82,7 @@ export class ReportsApi {
     }
   }
 
-  async ExecReport(
+  async execReport(
     resourceId: string,
     reportId: number,
     objectId: number,
@@ -128,7 +128,7 @@ export class ReportsApi {
     }
   }
 
-  async GetData(objectsLimit: number, sid: string) {
+  async getData(objectsLimit: number, sid: string) {
     const params = {
       tableIndex: 0,
       config: {
