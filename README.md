@@ -13,12 +13,12 @@ bun add git+https://github.com/peperc22/wialon-ts.git
 ## Usage
 
 ```typescript
-import { CoreAPI, WialonAuthError, WialonErrorCode } from 'wialon-ts';
+import { WialonApi, WialonAuthError, WialonErrorCode } from 'wialon-ts';
 
-const api = new CoreAPI();
+const wialon = new WialonApi();
 
 try {
-  const result = await api.auth.login('your-wialon-token');
+  const result = await wialon.auth.login('your-wialon-token');
   console.log('Session ID:', result.sid);
   console.log('Resource ID:', result.resourceId);
   console.log('User:', result.user);
