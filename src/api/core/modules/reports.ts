@@ -167,7 +167,7 @@ export class ReportsApi {
     try {
       const response = await this.client.get("", {
         params: {
-          svc: "report/clean_result",
+          svc: "report/cleanup_result",
           params: {},
           sid,
         },
