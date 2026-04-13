@@ -18,7 +18,7 @@ interface ResourceItem {
 }
 
 export class ReportsApi {
-  constructor(private client: AxiosInstance) {}
+  constructor(private client: AxiosInstance) { }
 
   async findReportId(
     sid: string,
@@ -158,6 +158,31 @@ export class ReportsApi {
       throw new WialonAuthError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during getting report data",
+        error,
+      );
+    }
+  }
+
+  async cleanResult(sid: string): Promise<boolean> {
+    try {
+      const response = await this.client.get("", {
+        params: {
+          svc: "report/clean_result",
+          params: {},
+          sid,
+        },
+      });
+
+      if ("error" in response.data && response.data.error !== 0)
+        throw new WialonAuthError(response.data.error);
+
+      return true;
+    } catch (error) {
+      if (error instanceof WialonAuthError) throw error;
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        "Unexpected error during cleaning report result",
         error,
       );
     }
