@@ -168,7 +168,7 @@ export class ReportsApi {
       const response = await this.client.get("", {
         params: {
           svc: "report/cleanup_result",
-          params: {},
+          params: JSON.stringify({}),
           sid,
         },
       });
