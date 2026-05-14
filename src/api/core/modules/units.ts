@@ -6,7 +6,11 @@ import type { IGroupData } from "../../interfaces/units.interface";
 export class UnitApi {
   constructor(private client: AxiosInstance) {}
 
-  async findUnitByName(sid: string, unitName: string): Promise<number> {
+  async findUnitByName(
+    sid: string,
+    unitName: string,
+    withDetails?: boolean,
+  ): Promise<number | { id: number; gpsId: number }> {
     const params = {
       spec: {
         itemsType: "avl_unit",
@@ -15,7 +19,7 @@ export class UnitApi {
         sortType: "",
       },
       force: 1,
-      flags: 1,
+      flags: withDetails ? 257 : 1,
       from: 0,
       to: 0,
     };
@@ -32,9 +36,12 @@ export class UnitApi {
       if ("error" in response.data)
         throw new WialonAuthError(response.data.error);
 
-      const id = response.data.items[0].id;
+      const item = response.data.items[0];
+      if (withDetails) {
+        return { id: item.id, gpsId: item.hw };
+      }
 
-      return id;
+      return item.id;
     } catch (error) {
       if (error instanceof WialonAuthError) throw error;
 
