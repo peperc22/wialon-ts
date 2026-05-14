@@ -5,6 +5,7 @@ import { WialonErrorMessages } from "../types/errors";
 import { AuthApi } from "./modules/auth.ts";
 import { ReportsApi } from "./modules/reports.ts";
 import { UnitApi } from "./modules/units.ts";
+import { HardwareApi } from "./modules/hardware.ts";
 
 export class WialonAuthError extends Error {
   public readonly code: number;
@@ -30,6 +31,7 @@ export class WialonApi {
   public readonly auth: AuthApi;
   public readonly report: ReportsApi;
   public readonly unit: UnitApi;
+  public readonly hardware: HardwareApi;
 
   constructor(baseUrl: string = WIALON_URL) {
     this.client = axios.create({
@@ -40,5 +42,6 @@ export class WialonApi {
     this.auth = new AuthApi(this.client);
     this.report = new ReportsApi(this.client);
     this.unit = new UnitApi(this.client);
+    this.hardware = new HardwareApi(this.client);
   }
 }
