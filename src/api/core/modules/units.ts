@@ -1,7 +1,8 @@
 import type { AxiosInstance } from "axios";
 import { WialonAuthError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
-import type { IGroupData } from "../../interfaces/units.interface";
+import type { IGroupData, IUnitData } from "../../interfaces/units.interface";
+import type { IWialonCommand } from "../../interfaces/commands.interface";
 
 export class UnitApi {
   constructor(private client: AxiosInstance) {}
@@ -10,7 +11,7 @@ export class UnitApi {
     sid: string,
     unitName: string,
     withDetails?: boolean,
-  ): Promise<number | { id: number; gpsId: number }> {
+  ): Promise<number | IUnitData> {
     const params = {
       spec: {
         itemsType: "avl_unit",
@@ -19,7 +20,7 @@ export class UnitApi {
         sortType: "",
       },
       force: 1,
-      flags: withDetails ? 257 : 1,
+      flags: withDetails ? 524545 : 1,
       from: 0,
       to: 0,
     };
@@ -38,7 +39,16 @@ export class UnitApi {
 
       const item = response.data.items[0];
       if (withDetails) {
-        return { id: item.id, gpsId: item.hw };
+        return {
+          id: item.id,
+          gpsId: item.hw,
+          commands: Object.values(
+            (item.cml ?? {}) as Record<string, IWialonCommand>,
+          ).map((entry) => ({
+            commandName: entry.n,
+            commandParameter: entry.p,
+          })),
+        };
       }
 
       return item.id;
