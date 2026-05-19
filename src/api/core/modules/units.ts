@@ -3,7 +3,7 @@ import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 import type { IGroupData, IUnitData } from "../../interfaces/units.interface";
 import type { IWialonCommand } from "../../interfaces/commands.interface";
-import type { CommandProtocolType, CommandType } from "../../types/commands";
+import type { CommandProtocolType } from "../../types/commands";
 
 export class UnitApi {
   constructor(private client: AxiosInstance) {}
