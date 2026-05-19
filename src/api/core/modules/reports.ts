@@ -71,9 +71,9 @@ export class ReportsApi {
 
       return report.id;
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during report search",
         error,
