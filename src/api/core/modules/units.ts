@@ -3,6 +3,7 @@ import { WialonAuthError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 import type { IGroupData, IUnitData } from "../../interfaces/units.interface";
 import type { IWialonCommand } from "../../interfaces/commands.interface";
+import type { CommandProtocolType, CommandType } from "../../types/commands";
 
 export class UnitApi {
   constructor(private client: AxiosInstance) {}
@@ -101,6 +102,46 @@ export class UnitApi {
       throw new WialonAuthError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during group data retrieval",
+        error,
+      );
+    }
+  }
+
+  async executeCommand(
+    sid: string,
+    commandName: string,
+    commandParameter: string,
+    unitId: number,
+    protocolType: CommandProtocolType,
+    timeout: number,
+    flags?: number,
+  ): Promise<void> {
+    const params = {
+      itemId: unitId,
+      commandName,
+      linkType: protocolType,
+      param: commandParameter,
+      timeout,
+      flags: flags ?? 0,
+    };
+
+    try {
+      const response = await this.client.get("", {
+        params: {
+          svc: "unit/exec_cmd",
+          params: JSON.stringify(params),
+          sid: sid,
+        },
+      });
+
+      if ("error" in response.data)
+        throw new WialonAuthError(response.data.error);
+    } catch (error) {
+      if (error instanceof WialonAuthError) throw error;
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        "Unexpected error during command execution",
         error,
       );
     }
