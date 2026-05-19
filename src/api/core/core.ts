@@ -7,7 +7,7 @@ import { ReportsApi } from "./modules/reports.ts";
 import { UnitApi } from "./modules/units.ts";
 import { HardwareApi } from "./modules/hardware.ts";
 
-export class WialonAuthError extends Error {
+export class WialonError extends Error {
   public readonly code: number;
   public readonly isWialonError: boolean;
   public readonly originalError?: unknown;
