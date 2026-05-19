@@ -1,5 +1,5 @@
 import type { AxiosInstance } from "axios";
-import { WialonAuthError } from "../core";
+import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 
 export class HardwareApi {
@@ -32,9 +32,9 @@ export class HardwareApi {
 
       return { model: hardwareInfo };
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during hardware info retrieval",
         error,

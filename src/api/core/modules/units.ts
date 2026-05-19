@@ -1,5 +1,5 @@
 import type { AxiosInstance } from "axios";
-import { WialonAuthError } from "../core";
+import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 import type { IGroupData, IUnitData } from "../../interfaces/units.interface";
 import type { IWialonCommand } from "../../interfaces/commands.interface";
@@ -35,8 +35,7 @@ export class UnitApi {
         },
       });
 
-      if ("error" in response.data)
-        throw new WialonAuthError(response.data.error);
+      if ("error" in response.data) throw new WialonError(response.data.error);
 
       const item = response.data.items[0];
       if (withDetails) {
@@ -54,9 +53,9 @@ export class UnitApi {
 
       return item.id;
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during unit search",
         error,
@@ -86,8 +85,7 @@ export class UnitApi {
         },
       });
 
-      if ("error" in response.data)
-        throw new WialonAuthError(response.data.error);
+      if ("error" in response.data) throw new WialonError(response.data.error);
 
       const data = response.data.items[0];
 
@@ -97,9 +95,9 @@ export class UnitApi {
         unitIds: data.u,
       };
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during group data retrieval",
         error,
@@ -134,12 +132,11 @@ export class UnitApi {
         },
       });
 
-      if ("error" in response.data)
-        throw new WialonAuthError(response.data.error);
+      if ("error" in response.data) throw new WialonError(response.data.error);
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during command execution",
         error,

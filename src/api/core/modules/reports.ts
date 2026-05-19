@@ -1,5 +1,5 @@
 import type { AxiosInstance } from "axios";
-import { WialonAuthError } from "../core";
+import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 
 interface Report {
@@ -18,7 +18,7 @@ interface ResourceItem {
 }
 
 export class ReportsApi {
-  constructor(private client: AxiosInstance) { }
+  constructor(private client: AxiosInstance) {}
 
   async findReportId(
     sid: string,
@@ -49,14 +49,13 @@ export class ReportsApi {
         },
       });
 
-      if ("error" in response.data)
-        throw new WialonAuthError(response.data.error);
+      if ("error" in response.data) throw new WialonError(response.data.error);
 
       const data: ResourceItem[] = response.data.items;
 
       const item = data.find((obj) => obj.nm === user);
       if (!item) {
-        throw new WialonAuthError(
+        throw new WialonError(
           WialonErrorCode.UNKNOWN_ERROR,
           `Resource not found: ${user}`,
         );
@@ -64,7 +63,7 @@ export class ReportsApi {
 
       const report = Object.values(item.rep).find((r) => r.n === reportName);
       if (!report) {
-        throw new WialonAuthError(
+        throw new WialonError(
           WialonErrorCode.UNKNOWN_ERROR,
           `Report not found: ${reportName} in resource ${user}`,
         );
@@ -113,14 +112,13 @@ export class ReportsApi {
         },
       });
 
-      if ("error" in response.data)
-        throw new WialonAuthError(response.data.error);
+      if ("error" in response.data) throw new WialonError(response.data.error);
 
       return true;
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during exec report",
         error,
@@ -153,9 +151,9 @@ export class ReportsApi {
 
       return response.data;
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during getting report data",
         error,
@@ -174,13 +172,13 @@ export class ReportsApi {
       });
 
       if ("error" in response.data && response.data.error !== 0)
-        throw new WialonAuthError(response.data.error);
+        throw new WialonError(response.data.error);
 
       return true;
     } catch (error) {
-      if (error instanceof WialonAuthError) throw error;
+      if (error instanceof WialonError) throw error;
 
-      throw new WialonAuthError(
+      throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during cleaning report result",
         error,
