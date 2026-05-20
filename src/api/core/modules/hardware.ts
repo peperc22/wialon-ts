@@ -1,9 +1,9 @@
-import type { AxiosInstance } from "axios";
+import type { HttpClient } from "../../../config/http-client";
 import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 
 export class HardwareApi {
-  constructor(private client: AxiosInstance) {}
+  constructor(private client: HttpClient) {}
 
   async getHardwareInfo(
     sid: string,
@@ -16,7 +16,7 @@ export class HardwareApi {
     };
 
     try {
-      const response = await this.client.get("", {
+      const response: any = await this.client.get("", {
         params: {
           svc: "core/get_hw_types",
           params: JSON.stringify(params),
