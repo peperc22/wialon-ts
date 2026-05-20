@@ -1,7 +1,6 @@
-import type { AxiosInstance } from "axios";
 import { WIALON_URL } from "../../config/config";
-import axios from "axios";
 import { WialonErrorMessages } from "../types/errors";
+import { HttpClient } from "../../config/http-client.ts";
 import { AuthApi } from "./modules/auth.ts";
 import { ReportsApi } from "./modules/reports.ts";
 import { UnitApi } from "./modules/units.ts";
@@ -27,17 +26,14 @@ export class WialonError extends Error {
 }
 
 export class WialonApi {
-  private client: AxiosInstance;
+  private client: HttpClient;
   public readonly auth: AuthApi;
   public readonly report: ReportsApi;
   public readonly unit: UnitApi;
   public readonly hardware: HardwareApi;
 
   constructor(baseUrl: string = WIALON_URL) {
-    this.client = axios.create({
-      baseURL: baseUrl,
-      timeout: 30000,
-    });
+    this.client = new HttpClient(baseUrl);
 
     this.auth = new AuthApi(this.client);
     this.report = new ReportsApi(this.client);
