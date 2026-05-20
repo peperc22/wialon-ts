@@ -1,12 +1,19 @@
-import type { AxiosInstance } from "axios";
+import type { HttpClient } from "../../../config/http-client";
 import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 import type { IGroupData, IUnitData } from "../../interfaces/units.interface";
 import type { IWialonCommand } from "../../interfaces/commands.interface";
 import type { CommandProtocolType } from "../../types/commands";
+import type { WialonResponse } from "../../types/wialon";
+
+interface UnitSearchItem {
+  id: number;
+  hw?: number;
+  cml?: Record<string, IWialonCommand>;
+}
 
 export class UnitApi {
-  constructor(private client: AxiosInstance) {}
+  constructor(private client: HttpClient) {}
 
   async findUnitByName(
     sid: string,
@@ -27,7 +34,9 @@ export class UnitApi {
     };
 
     try {
-      const response = await this.client.get("", {
+      const response = await this.client.get<
+        WialonResponse<{ items: UnitSearchItem[] }>
+      >("", {
         params: {
           svc: "core/search_items",
           params: JSON.stringify(params),
@@ -35,13 +44,16 @@ export class UnitApi {
         },
       });
 
-      if ("error" in response.data) throw new WialonError(response.data.error);
+      if ("error" in response.data && typeof response.data.error === "number")
+        throw new WialonError(response.data.error);
 
       const item = response.data.items[0];
+      if (!item) throw new Error("No item found");
+
       if (withDetails) {
         return {
           id: item.id,
-          gpsId: item.hw,
+          gpsId: item.hw!,
           commands: Object.values(
             (item.cml ?? {}) as Record<string, IWialonCommand>,
           ).map((entry) => ({
@@ -77,7 +89,9 @@ export class UnitApi {
       to: 0,
     };
     try {
-      const response = await this.client.get("", {
+      const response = await this.client.get<
+        WialonResponse<{ items: { id: number; nm: string; u: number[] }[] }>
+      >("", {
         params: {
           svc: "core/search_items",
           params: JSON.stringify(params),
@@ -85,13 +99,15 @@ export class UnitApi {
         },
       });
 
-      if ("error" in response.data) throw new WialonError(response.data.error);
+      if ("error" in response.data && typeof response.data.error === "number")
+        throw new WialonError(response.data.error);
 
       const data = response.data.items[0];
+      if (!data) throw new Error("No group found");
 
       return {
         groupName: data.nm,
-        groupId: data.id,
+        groupId: String(data.id),
         unitIds: data.u,
       };
     } catch (error) {
@@ -124,7 +140,7 @@ export class UnitApi {
     };
 
     try {
-      const response = await this.client.get("", {
+      const response = await this.client.get<{ error?: number }>("", {
         params: {
           svc: "unit/exec_cmd",
           params: JSON.stringify(params),
@@ -132,7 +148,8 @@ export class UnitApi {
         },
       });
 
-      if ("error" in response.data) throw new WialonError(response.data.error);
+      if ("error" in response.data && typeof response.data.error === "number")
+        throw new WialonError(response.data.error);
     } catch (error) {
       if (error instanceof WialonError) throw error;
 
