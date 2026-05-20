@@ -1,4 +1,4 @@
-import type { AxiosInstance } from "axios";
+import type { HttpClient } from "../../../config/http-client.ts";
 import type {
   ILoginParams,
   ILoginResponse,
@@ -6,10 +6,9 @@ import type {
 } from "../../interfaces/core.interface";
 import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
-import axios from "axios";
 
 export class AuthApi {
-  constructor(private client: AxiosInstance) {}
+  constructor(private client: HttpClient) {}
 
   async login(wialonToken: string): Promise<ILoginResult> {
     const params: ILoginParams = { token: wialonToken };
@@ -43,14 +42,6 @@ export class AuthApi {
         throw error;
       }
 
-      if (axios.isAxiosError(error)) {
-        throw new WialonError(
-          WialonErrorCode.UNKNOWN_ERROR,
-          `Network error: ${error.message}`,
-          error,
-        );
-      }
-
       throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
         "Unexpected error during login",
@@ -73,14 +64,6 @@ export class AuthApi {
         throw new WialonError(response.data.error);
     } catch (error) {
       if (error instanceof WialonError) throw error;
-
-      if (axios.isAxiosError(error)) {
-        throw new WialonError(
-          WialonErrorCode.UNKNOWN_ERROR,
-          `Network error: ${error.message}`,
-          error,
-        );
-      }
 
       throw new WialonError(
         WialonErrorCode.UNKNOWN_ERROR,
