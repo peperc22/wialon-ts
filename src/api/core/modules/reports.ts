@@ -1,4 +1,4 @@
-import type { AxiosInstance } from "axios";
+import type { HttpClient } from "../../../config/http-client";
 import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 
@@ -18,7 +18,7 @@ interface ResourceItem {
 }
 
 export class ReportsApi {
-  constructor(private client: AxiosInstance) {}
+  constructor(private client: HttpClient) {}
 
   async findReportId(
     sid: string,
@@ -41,15 +41,17 @@ export class ReportsApi {
     };
 
     try {
-      const response = await this.client.get("", {
-        params: {
-          svc: "core/search_items",
-          params: JSON.stringify(params),
-          sid,
-        },
-      });
+      const response: { data: { items: ResourceItem[] } } =
+        await this.client.get("", {
+          params: {
+            svc: "core/search_items",
+            params: JSON.stringify(params),
+            sid,
+          },
+        });
 
-      if ("error" in response.data) throw new WialonError(response.data.error);
+      if ("error" in response.data && typeof response.data.error === "number")
+        throw new WialonError(response.data.error);
 
       const data: ResourceItem[] = response.data.items;
 
@@ -104,7 +106,7 @@ export class ReportsApi {
     };
 
     try {
-      const response = await this.client.get("", {
+      const response = await this.client.get<Record<string, unknown>>("", {
         params: {
           svc: "report/exec_report",
           params: JSON.stringify(params),
@@ -112,7 +114,8 @@ export class ReportsApi {
         },
       });
 
-      if ("error" in response.data) throw new WialonError(response.data.error);
+      if ("error" in response.data && typeof response.data.error === "number")
+        throw new WialonError(response.data.error);
 
       return true;
     } catch (error) {
@@ -163,7 +166,7 @@ export class ReportsApi {
 
   async cleanResult(sid: string): Promise<boolean> {
     try {
-      const response = await this.client.get("", {
+      const response = await this.client.get<{ error: number }>("", {
         params: {
           svc: "report/cleanup_result",
           params: JSON.stringify({}),
