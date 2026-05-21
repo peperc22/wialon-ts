@@ -129,7 +129,7 @@ export class UnitApi {
     protocolType: CommandProtocolType,
     timeout: number,
     flags?: number,
-  ): Promise<void> {
+  ): Promise<boolean> {
     const params = {
       itemId: unitId,
       commandName,
@@ -149,7 +149,9 @@ export class UnitApi {
       });
 
       if ("error" in response.data && typeof response.data.error === "number")
-        throw new WialonError(response.data.error);
+        return false;
+
+      return true;
     } catch (error) {
       if (error instanceof WialonError) throw error;
 
