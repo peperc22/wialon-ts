@@ -66,7 +66,7 @@ export class UnitApi {
             commandParameter: entry.p,
           })),
           lastReportUnixTime: item.lmsg?.t ?? null,
-          connectionStatus: item.netconn ?? null,
+          gpsConnectionStatus: item.netconn ?? null,
         };
       }
 

@@ -11,5 +11,5 @@ export interface IUnitData {
   gpsId: number;
   commands: ICommand[];
   lastReportUnixTime: number | null;
-  connectionStatus: number | null;
+  gpsConnectionStatus: number | null;
 }
