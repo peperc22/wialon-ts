@@ -10,4 +10,6 @@ export interface IUnitData {
   id: number;
   gpsId: number;
   commands: ICommand[];
+  lastReportUnixTime: number | null;
+  connectionStatus: number | null;
 }
