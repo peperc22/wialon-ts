@@ -2,7 +2,10 @@ import type { HttpClient } from "../../../config/http-client";
 import { WialonError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
 import type { IGroupData, IUnitData } from "../../interfaces/units.interface";
-import type { IWialonCommand } from "../../interfaces/commands.interface";
+import type {
+  IWialonCommand,
+  WialonLmsgObject,
+} from "../../interfaces/commands.interface";
 import type { CommandProtocolType } from "../../types/commands";
 import type { WialonResponse } from "../../types/wialon";
 
@@ -10,6 +13,8 @@ interface UnitSearchItem {
   id: number;
   hw?: number;
   cml?: Record<string, IWialonCommand>;
+  lmsg?: WialonLmsgObject;
+  netconn?: number;
 }
 
 export class UnitApi {
@@ -28,7 +33,7 @@ export class UnitApi {
         sortType: "",
       },
       force: 1,
-      flags: withDetails ? 524545 : 1,
+      flags: withDetails ? "4611686018427387903" : 1,
       from: 0,
       to: 0,
     };
@@ -60,6 +65,8 @@ export class UnitApi {
             commandName: entry.n,
             commandParameter: entry.p,
           })),
+          lastReportUnixTime: item.lmsg?.t ?? null,
+          connectionStatus: item.netconn ?? null,
         };
       }
 
