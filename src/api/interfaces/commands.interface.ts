@@ -10,3 +10,7 @@ export interface IWialonCommand {
   n: string;
   p: string;
 }
+
+export interface WialonLmsgObject {
+  t: number | null;
+}
