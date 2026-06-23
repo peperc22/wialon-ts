@@ -4,7 +4,7 @@ import {HttpClient} from "../../config/http-client.ts";
 import {AuthApi} from "./modules/auth.ts";
 import {ReportsApi} from "./modules/reports.ts";
 import {HardwareApi} from "./modules/hardware.ts";
-import type {UnitApi} from "@/api/core/modules/units";
+import {UnitApi} from "@/api/core/modules/units";
 
 export class WialonError extends Error {
     public readonly code: number;
