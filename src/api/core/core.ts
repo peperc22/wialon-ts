@@ -1,9 +1,9 @@
 import {WIALON_URL} from "@/config/config.ts";
 import {HttpClient} from "@/config/http-client.ts";
 import {UnitApi} from "@/api/core/modules/units";
-import {HardwareApi} from "@/api/core/modules/hardware.ts";
-import {ReportsApi} from "@/api/core/modules/reports.ts";
-import {AuthApi} from "@/api/core/modules/auth.ts";
+import {HardwareApi} from "@/api/core/modules/hardware";
+import {ReportsApi} from "@/api/core/modules/reports";
+import {AuthApi} from "@/api/core/modules/auth";
 import {WialonErrorMessages} from "@/api/types/errors.ts";
 
 export class WialonError extends Error {
