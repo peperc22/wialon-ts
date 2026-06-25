@@ -1,8 +1,8 @@
-import type {IGroupData} from "@/api/interfaces/units.interface.ts";
-import {WialonError} from "@/api/core/core.ts";
-import {WialonErrorCode} from "@/api/types/errors.ts";
-import type {WialonResponse} from "@/api/types/wialon.ts";
-import type {HttpClient} from "@/config/http-client.ts";
+import type {IGroupData} from "../../../interfaces/units.interface.ts";
+import {WialonError} from "../../core.ts";
+import {WialonErrorCode} from "../../../types/errors.ts";
+import type {WialonResponse} from "../../../types/wialon.ts";
+import type {HttpClient} from "../../../../config/http-client.ts";
 
 export async function getUnitGroup(
     client: HttpClient,

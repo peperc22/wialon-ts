@@ -1,7 +1,7 @@
-import type {HttpClient} from "@/config/http-client.ts";
-import type {CommandProtocolType} from "@/api/types/commands.ts";
-import {WialonError} from "@/api/core/core.ts";
-import {WialonErrorCode} from "@/api/types/errors.ts";
+import type {HttpClient} from "../../../../config/http-client.ts";
+import type {CommandProtocolType} from "../../../types/commands.ts";
+import {WialonError} from "../../core.ts";
+import {WialonErrorCode} from "../../../types/errors.ts";
 
 export async function executeCommand(
     client: HttpClient,

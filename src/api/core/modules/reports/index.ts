@@ -1,8 +1,8 @@
-import type {HttpClient} from "@/config/http-client.ts";
-import {findReportId} from "@/api/core/modules/reports/find-report-id.ts";
-import {execReport} from "@/api/core/modules/reports/exec-report.ts";
-import {getData} from "@/api/core/modules/reports/get-data.ts";
-import {cleanResult} from "@/api/core/modules/reports/clean-result.ts";
+import type {HttpClient} from "../../../../config/http-client.ts";
+import {findReportId} from "./find-report-id.ts";
+import {execReport} from "./exec-report.ts";
+import {getData} from "./get-data.ts";
+import {cleanResult} from "./clean-result.ts";
 
 export class ReportsApi {
     constructor(private client: HttpClient) {

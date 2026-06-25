@@ -1,11 +1,11 @@
-import type {HttpClient} from "@/config/http-client.ts";
+import type {HttpClient} from "../../../../config/http-client.ts";
 import type {
     ILoginParams,
     ILoginResponse,
     ILoginResult,
-} from "@/api/interfaces/core.interface.ts";
-import {WialonError} from "@/api/core/core.ts";
-import {WialonErrorCode} from "@/api/types/errors.ts";
+} from "../../../interfaces/core.interface.ts";
+import {WialonError} from "../../core.ts";
+import {WialonErrorCode} from "../../../types/errors.ts";
 
 export async function login(
     client: HttpClient,

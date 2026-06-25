@@ -1,10 +1,10 @@
-import {WIALON_URL} from "@/config/config.ts";
-import {HttpClient} from "@/config/http-client.ts";
-import {UnitApi} from "@/api/core/modules/units";
-import {HardwareApi} from "@/api/core/modules/hardware";
-import {ReportsApi} from "@/api/core/modules/reports";
-import {AuthApi} from "@/api/core/modules/auth";
-import {WialonErrorMessages} from "@/api/types/errors.ts";
+import { WIALON_URL } from "../../config/config.ts";
+import { HttpClient } from "../../config/http-client.ts";
+import { UnitApi } from "./modules/units";
+import { HardwareApi } from "./modules/hardware";
+import { ReportsApi } from "./modules/reports";
+import { AuthApi } from "./modules/auth";
+import { WialonErrorMessages } from "../types/errors.ts";
 
 export class WialonError extends Error {
     public readonly code: number;

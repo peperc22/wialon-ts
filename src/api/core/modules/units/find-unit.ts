@@ -1,9 +1,9 @@
-import type {IUnitData, UnitSearchItem, UnitSearchStrategy} from "@/api/interfaces/units.interface.ts";
-import type {IWialonCommand} from "@/api/interfaces/commands.interface.ts";
-import type {HttpClient} from "@/config/http-client.ts";
-import type {WialonResponse} from "@/api/types/wialon.ts";
-import {WialonError} from "@/api/core/core.ts";
-import {WialonErrorCode} from "@/api/types/errors.ts";
+import type {IUnitData, UnitSearchItem, UnitSearchStrategy} from "../../../interfaces/units.interface.ts";
+import type {IWialonCommand} from "../../../interfaces/commands.interface.ts";
+import type {HttpClient} from "../../../../config/http-client.ts";
+import type {WialonResponse} from "../../../types/wialon.ts";
+import {WialonError} from "../../core.ts";
+import {WialonErrorCode} from "../../../types/errors.ts";
 
 const FULL_UNIT_FLAGS = "4611686018427387903";
 const MINIMAL_DATA_FLAGS = 1;

@@ -1,6 +1,6 @@
-import type {HttpClient} from "@/config/http-client.ts";
-import {WialonError} from "@/api/core/core.ts";
-import {WialonErrorCode} from "@/api/types/errors.ts";
+import type {HttpClient} from "../../../../config/http-client.ts";
+import {WialonError} from "../../core.ts";
+import {WialonErrorCode} from "../../../types/errors.ts";
 
 export async function cleanResult(
     client: HttpClient,

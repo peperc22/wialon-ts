@@ -1,9 +1,9 @@
-import type {HttpClient} from "@/config/http-client.ts";
-import {getUnitGroup} from "@/api/core/modules/units/get-unit-group.ts";
-import {executeCommand} from "@/api/core/modules/units/execute-command.ts";
-import type {IGroupData, IUnitData, UnitSearchStrategy} from "@/api/interfaces/units.interface.ts";
-import type {CommandProtocolType} from "@/api/types/commands.ts";
-import {BY_CUSTOM_FIELD, BY_NAME, findUnit} from "@/api/core/modules/units/find-unit.ts";
+import type {HttpClient} from "../../../../config/http-client.ts";
+import {getUnitGroup} from "./get-unit-group.ts";
+import {executeCommand} from "./execute-command.ts";
+import type {IGroupData, IUnitData, UnitSearchStrategy} from "../../../interfaces/units.interface.ts";
+import type {CommandProtocolType} from "../../../types/commands.ts";
+import {BY_CUSTOM_FIELD, BY_NAME, findUnit} from "./find-unit.ts";
 
 export class UnitApi {
     constructor(private client: HttpClient) {
