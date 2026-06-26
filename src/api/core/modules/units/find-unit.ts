@@ -32,6 +32,7 @@ function toUnitData(item: UnitSearchItem): IUnitData {
             })
         ),
         lastReportUnixTime: item.lmsg?.t ?? null,
+        lastPositionUnixTime: item.pos?.t ?? null,
         gpsConnectionStatus: item.netconn ?? null,
     }
 }
