@@ -11,6 +11,7 @@ export interface IUnitData {
     gpsId: number;
     commands: ICommand[];
     lastReportUnixTime: number | null;
+    lastPositionUnixTime: number | null;
     gpsConnectionStatus: number | null;
 }
 
@@ -43,5 +44,6 @@ export interface UnitSearchItem {
     hw?: number;
     cml?: Record<string, IWialonCommand>;
     lmsg?: { t: number };
+    pos?: { t: number };
     netconn?: number;
 }
