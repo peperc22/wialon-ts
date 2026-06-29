@@ -5,6 +5,7 @@ import { HardwareApi } from "./modules/hardware";
 import { ReportsApi } from "./modules/reports";
 import { AuthApi } from "./modules/auth";
 import { WialonErrorMessages } from "../types/errors.ts";
+import { GeofenceApi } from "./modules/geofence/index.ts";
 
 export class WialonError extends Error {
     public readonly code: number;
@@ -31,6 +32,7 @@ export class WialonApi {
     public readonly report: ReportsApi;
     public readonly unit: UnitApi;
     public readonly hardware: HardwareApi;
+    public readonly geofence: GeofenceApi;
 
     constructor(baseUrl: string = WIALON_URL) {
         this.client = new HttpClient(baseUrl);
@@ -39,5 +41,6 @@ export class WialonApi {
         this.report = new ReportsApi(this.client);
         this.unit = new UnitApi(this.client);
         this.hardware = new HardwareApi(this.client);
+        this.geofence = new GeofenceApi(this.client);
     }
 }
