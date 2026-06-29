@@ -1,6 +1,6 @@
-import type {HttpClient} from "../../../../config/http-client.ts";
-import {WialonError} from "../../core.ts";
-import {WialonErrorCode} from "../../../types/errors.ts";
+import type { HttpClient } from "../../../../config/http-client.ts";
+import { WialonError } from "../../core.ts";
+import { WialonErrorCode } from "../../../types/errors.ts";
 
 interface Report {
     id: number;
@@ -22,6 +22,7 @@ export async function findReportId(
     sid: string,
     user: string,
     reportName: string,
+    resourceId?: number,
 ): Promise<number> {
     const params = {
         spec: {
@@ -53,12 +54,15 @@ export async function findReportId(
 
         const data: ResourceItem[] = response.data.items;
 
-        const item = data.find((obj) => obj.nm === user);
+        let item = data.find((obj) => obj.nm === user);
         if (!item) {
-            throw new WialonError(
-                WialonErrorCode.UNKNOWN_ERROR,
-                `Resource not found: ${user}`,
-            );
+            item = data.find((obj) => obj.id === resourceId);
+
+            if (!item)
+                throw new WialonError(
+                    WialonErrorCode.UNKNOWN_ERROR,
+                    `Resource not found: ${user}`,
+                );
         }
 
         const report = Object.values(item.rep).find((r) => r.n === reportName);
