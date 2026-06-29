@@ -54,9 +54,9 @@ export async function findReportId(
 
         const data: ResourceItem[] = response.data.items;
 
-        let item = data.find((obj) => obj.nm === user);
+        let item = data.find((obj) => obj.id === resourceId);
         if (!item) {
-            item = data.find((obj) => obj.id === resourceId);
+            item = data.find((obj) => obj.nm === user);
 
             if (!item)
                 throw new WialonError(
