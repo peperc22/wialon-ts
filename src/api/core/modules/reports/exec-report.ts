@@ -10,12 +10,13 @@ export async function execReport(
   unixDateFrom: number,
   unixDateTo: number,
   sid: string,
+  objectSecId?: number,
 ) {
   const params = {
     reportResourceId: resourceId,
     reportTemplateId: reportId,
     reportObjectId: objectId,
-    reportObjectSecId: 0,
+    reportObjectSecId: objectSecId || 0,
     interval: {
       from: unixDateFrom,
       to: unixDateTo,
