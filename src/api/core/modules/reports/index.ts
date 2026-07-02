@@ -5,30 +5,39 @@ import { getData } from "./get-data.ts";
 import { cleanResult } from "./clean-result.ts";
 
 export class ReportsApi {
-    constructor(private client: HttpClient) {
-    }
+  constructor(private client: HttpClient) {}
 
-    findReportId = (
-        sid: string,
-        user: string,
-        reportName: string,
-        resourceId?: number,
-    ): Promise<number> =>
-        findReportId(this.client, sid, user, reportName, resourceId);
+  findReportId = (
+    sid: string,
+    user: string,
+    reportName: string,
+    resourceId?: number,
+  ): Promise<number> =>
+    findReportId(this.client, sid, user, reportName, resourceId);
 
-    execReport = (
-        resourceId: string,
-        reportId: number,
-        objectId: number,
-        unixDateFrom: number,
-        unixDateTo: number,
-        sid: string,
-    ) =>
-        execReport(this.client, resourceId, reportId, objectId, unixDateFrom, unixDateTo, sid);
+  execReport = (
+    resourceId: string,
+    reportId: number,
+    objectId: number,
+    unixDateFrom: number,
+    unixDateTo: number,
+    sid: string,
+    objectSecId?: number,
+  ) =>
+    execReport(
+      this.client,
+      resourceId,
+      reportId,
+      objectId,
+      unixDateFrom,
+      unixDateTo,
+      sid,
+      objectSecId,
+    );
 
-    getData = (objectsLimit: number, sid: string) =>
-        getData(this.client, objectsLimit, sid);
+  getData = (objectsLimit: number, sid: string) =>
+    getData(this.client, objectsLimit, sid);
 
-    cleanResult = (sid: string): Promise<boolean> =>
-        cleanResult(this.client, sid);
+  cleanResult = (sid: string): Promise<boolean> =>
+    cleanResult(this.client, sid);
 }
