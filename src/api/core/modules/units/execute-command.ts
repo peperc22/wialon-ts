@@ -1,7 +1,7 @@
-import type {HttpClient} from "../../../../config/http-client.ts";
-import type {CommandProtocolType} from "../../../types/commands.ts";
-import {WialonError} from "../../core.ts";
-import {WialonErrorCode} from "../../../types/errors.ts";
+import type { HttpClient } from "../../../../config/http-client.ts";
+import type { CommandProtocolType } from "../../../types/commands.ts";
+import { WialonError } from "../../core.ts";
+import { WialonErrorCode } from "../../../types/errors.ts";
 
 export async function executeCommand(
     client: HttpClient,
@@ -12,7 +12,7 @@ export async function executeCommand(
     protocolType: CommandProtocolType,
     timeout: number,
     flags?: number,
-): Promise<boolean> {
+): Promise<boolean | unknown> {
     const params = {
         itemId: unitId,
         commandName,
@@ -32,7 +32,7 @@ export async function executeCommand(
         });
 
         if ("error" in response.data && typeof response.data.error === "number")
-            return false;
+            return response.data;
 
         return true;
     } catch (error) {
