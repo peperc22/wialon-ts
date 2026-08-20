@@ -1,10 +1,85 @@
 import type { AxiosInstance } from "axios";
 import { WialonAuthError } from "../core";
 import { WialonErrorCode } from "../../types/errors";
-import type { IGroupData } from "../../interfaces/units.interface";
+import type { IGroupData, IUnitsSensors, IUnitsLastSensorsValues } from "../../interfaces/units.interface";
 
 export class UnitApi {
   constructor(private client: AxiosInstance) {}
+
+  async getUnitsSensors(sid: string, unitIds: number[]): Promise<IUnitsSensors[]> {
+    const params = {
+        spec: {
+          itemsType: "avl_unit",
+          propName: "sys_id",
+          propValueMask: unitIds.join(','),
+          sortType: "sys_name"
+        },
+      force: 1,
+      flags: 4097,
+      from: 0,
+      to: 0,
+    }
+
+    try {
+      const response = await this.client.get("", {
+        params: {
+          svc: "core/search_items",
+          params: JSON.stringify(params),
+          sid: sid,
+        },
+      });
+
+      if ("error" in response.data)
+        throw new WialonAuthError(response.data.error);
+
+      const items = response.data.items
+
+      return items
+    } catch (error) {
+      if (error instanceof WialonAuthError) throw error;
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        "Unexpected error during units sensors search",
+        error,
+      );
+    }
+  }
+
+  async getLastUnitsSensorsValues(sid: string, unitIds: number[]): Promise<IUnitsLastSensorsValues[]> {
+    const params = {
+      "itemIds": unitIds
+    }
+
+    try {
+      const response = await this.client.get("", {
+        params: {
+          svc: "unit/calc_last",
+          params: JSON.stringify(params),
+          sid: sid,
+        },
+      });
+
+      if ("error" in response.data)
+        throw new WialonAuthError(response.data.error);
+
+      const unitsSensorsValues: IUnitsLastSensorsValues[] =
+        response.data.map(({ i, sensors }) => ({
+          i,
+          sensors,
+        }));
+
+      return unitsSensorsValues
+    } catch (error) {
+      if (error instanceof WialonAuthError) throw error;
+
+      throw new WialonAuthError(
+        WialonErrorCode.UNKNOWN_ERROR,
+        "Unexpected error during units sensors values search",
+        error,
+      );
+    }
+  }
 
   async findUnitByName(sid: string, unitName: string): Promise<number> {
     const params = {
