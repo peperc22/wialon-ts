@@ -1,17 +1,21 @@
-import type {HttpClient} from "../../../../config/http-client.ts";
+import type { HttpClient } from "../../../../config/http-client.ts";
 import type {
     ILoginParams,
     ILoginResponse,
     ILoginResult,
 } from "../../../interfaces/core.interface.ts";
-import {WialonError} from "../../core.ts";
-import {WialonErrorCode} from "../../../types/errors.ts";
+import { WialonError } from "../../core.ts";
+import { WialonErrorCode } from "../../../types/errors.ts";
 
 export async function login(
     client: HttpClient,
     wialonToken: string,
+    flags?: number,
 ): Promise<ILoginResult> {
-    const params: ILoginParams = {token: wialonToken};
+    const params: ILoginParams = {
+        token: wialonToken,
+        fl: flags || 6,
+    };
 
     try {
         const response = await client.get<ILoginResponse>("", {
@@ -24,7 +28,7 @@ export async function login(
         if ("error" in response.data && typeof response.data.error === "number")
             throw new WialonError(response.data.error);
 
-        const {eid: sid, user, au} = response.data;
+        const { eid: sid, user, au } = response.data;
 
         if (!sid || !user?.bact || !au)
             throw new WialonError(
