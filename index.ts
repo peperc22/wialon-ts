@@ -11,6 +11,6 @@ export type {
   ILoginResult,
 } from "./src/api/interfaces/core.interface";
 
-export type { IGroupData } from "./src/api/interfaces/units.interface";
+export type { IGroupData, IUnitsSensors, IUnitsLastSensorsValues } from "./src/api/interfaces/units.interface";
 
 export { WialonErrorCode, WialonErrorMessages } from "./src/api/types/errors";
