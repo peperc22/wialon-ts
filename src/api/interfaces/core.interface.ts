@@ -1,5 +1,6 @@
 export interface ILoginParams {
   token: string;
+  fl: number;
 }
 
 export interface ILoginResponse {
