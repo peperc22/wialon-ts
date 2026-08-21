@@ -83,3 +83,35 @@ export interface IWialonSensorValues {
         value: string;
     };
 }
+
+export type WialonParameterValue =
+    | string
+    | number
+    | boolean
+    | null;
+
+export interface IWialonMessagePosition {
+    y: number;
+    x: number;
+    z?: number;
+    s?: number;
+    c?: number;
+    sc?: number;
+}
+
+export interface IWialonDataMessage {
+    t: number;
+    f: number;
+    tp: "ud";
+    pos?: IWialonMessagePosition;
+    p: Record<string, WialonParameterValue>;
+}
+
+export interface IDriverBehaviourEvent {
+    timestamp: number;
+    latitude: number | null;
+    longitude: number | null;
+    alarmType: 56;
+    st: number;
+    name: string | null;
+}

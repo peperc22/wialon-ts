@@ -3,7 +3,15 @@ import {getUnitGroup} from "./get-unit-group.ts";
 import {executeCommand} from "./execute-command.ts";
 import { getUnitsSensors } from "./get-units-sensors.ts";
 import { getLastUnitsSensorsValues } from "./get-last-known-units-sensor-values.ts";
-import type {IGroupData, IUnitData, IUnitsSensors, IUnitsLastSensorsValues, UnitSearchStrategy} from "../../../interfaces/units.interface.ts";
+import { getDriverBehaviourEvents } from "./get-driver-behaviour-events.ts";
+import type {
+    IGroupData,
+    IUnitData,
+    IUnitsSensors,
+    IUnitsLastSensorsValues,
+    UnitSearchStrategy,
+    IDriverBehaviourEvent,
+} from "../../../interfaces/units.interface.ts";
 import type {CommandProtocolType} from "../../../types/commands.ts";
 import {BY_CUSTOM_FIELD, BY_NAME, findUnit} from "./find-unit.ts";
 
@@ -61,4 +69,18 @@ export class UnitApi {
         unitIds: number[],
     ): Promise<IUnitsLastSensorsValues[]> =>
         getLastUnitsSensorsValues(this.client, sid, unitIds);
+
+    getDriverBehaviourEvents = (
+        sid: string,
+        unitId: number,
+        timeFrom: number,
+        timeToExclusive: number,
+    ): Promise<IDriverBehaviourEvent[]> =>
+        getDriverBehaviourEvents(
+            this.client,
+            sid,
+            unitId,
+            timeFrom,
+            timeToExclusive,
+        );
 }
